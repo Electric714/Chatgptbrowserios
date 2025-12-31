@@ -1,6 +1,7 @@
 import Model
 import SwiftUI
 import WebUI
+import WebKit
 
 struct BrowserView: View {
     @StateObject var store: Browser
@@ -40,14 +41,19 @@ struct BrowserView: View {
                 .background(Color(.secondarySystemBackground))
                 .task {
                     agentController.attach(proxy: proxy)
+                    BrowserEnvironment.shared.updateActiveWebView(from: proxy)
                     await store.send(.task(
                         String(describing: Self.self),
                         .init(getResourceURL: { Bundle.module.url(forResource: $0, withExtension: $1) }),
                         proxy
                     ))
                 }
+                .onDisappear {
+                    BrowserEnvironment.shared.setActiveWebView(nil)
+                }
                 .onChange(of: proxy.url) { _, newValue in
                     Task {
+                        BrowserEnvironment.shared.updateActiveWebView(from: proxy)
                         await store.send(.onChangeURL(newValue))
                     }
                 }
