@@ -26,6 +26,14 @@ jobs:
       - name: List schemes
         run: xcodebuild -list -project Telescopure.xcodeproj
 
+      - name: Clean Xcode caches
+        run: |
+          set -euxo pipefail
+          rm -rf ~/Library/Developer/Xcode/DerivedData
+          rm -rf ~/Library/Developer/Xcode/ModuleCache.noindex
+          rm -rf ~/Library/Caches/org.swift.swiftpm
+          rm -rf ~/.swiftpm
+
       # Important: resolve packages explicitly and keep them in a known directory
       - name: Resolve Swift packages
         run: |

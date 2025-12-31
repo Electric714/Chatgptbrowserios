@@ -161,7 +161,7 @@ public final class AgentController: ObservableObject {
         guard let webView else { return nil }
         let configuration = WKSnapshotConfiguration()
         configuration.rect = webView.bounds
-        let image = try await withCheckedThrowingContinuation { continuation in
+        let image = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<(encoded: String, viewport: CGSize), Error>) in
             webView.takeSnapshot(with: configuration) { image, error in
                 if let error {
                     continuation.resume(throwing: error)
