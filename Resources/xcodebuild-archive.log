@@ -1,0 +1,16 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Telescopure.xcodeproj -scheme Telescopure -configuration Release -sdk iphoneos -destination generic/platform=iOS -archivePath /Users/runner/work/build/Telescopure.xcarchive -clonedSourcePackagesDirPath /Users/runner/work/.spm -skipPackagePluginValidation clean archive CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY= DEVELOPMENT_TEAM= PROVISIONING_PROFILE_SPECIFIER=
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+note: Using new build system
+note: Building targets in dependency order
+error: package at '/Users/runner/work/Chatgptbrowserios/LocalPackage' is using Swift tools version 6.1.0 which is not supported by the installed version of Xcode. The currently installed Xcode (15.4) supports Swift tools versions up to 5.10.0. (in target 'UserInterface' from project 'LocalPackage')
+
+** ARCHIVE FAILED **
+
+
+The following build commands failed:
+        Resolve Package Graph
+(1 failure)
