@@ -123,7 +123,12 @@ public final class AgentController: ObservableObject {
                 if actions.isEmpty {
                     appendLog(.init(date: Date(), kind: .warning, message: "No actions returned"))
                 }
-                let finished = response.isComplete || await execute(actions: actions)
+                let finished: Bool
+                if response.isComplete {
+                    finished = true
+                } else {
+                    finished = await execute(actions: actions)
+                }
                 if finished {
                     appendLog(.init(date: Date(), kind: .result, message: "Agent marked goal complete"))
                     return
