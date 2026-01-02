@@ -350,7 +350,7 @@ private struct BrowserActionExecutor {
 
 @MainActor
 private func fetchPageContext(from webView: WKWebView, includeText: Bool) async -> PageContext {
-    let script = """
+    let script = #"""
     (() => {
         const text = (document.body?.innerText || '').replace(/\s+/g, ' ').trim();
         return JSON.stringify({
@@ -358,7 +358,7 @@ private func fetchPageContext(from webView: WKWebView, includeText: Bool) async 
             snippet: text.slice(0, 2000)
         });
     })();
-    """
+    """#
 
     var title = webView.title ?? ""
     var snippet: String? = nil
