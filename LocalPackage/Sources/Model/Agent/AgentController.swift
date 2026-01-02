@@ -123,7 +123,12 @@ public final class AgentController: ObservableObject {
                 if actions.isEmpty {
                     appendLog(.init(date: Date(), kind: .warning, message: "No actions returned"))
                 }
-                let finished = response.isComplete || await execute(actions: actions)
+                if response.isComplete {
+                    appendLog(.init(date: Date(), kind: .result, message: "Agent marked goal complete"))
+                    return
+                }
+
+                let finished = await execute(actions: actions)
                 if finished {
                     appendLog(.init(date: Date(), kind: .result, message: "Agent marked goal complete"))
                     return
@@ -161,7 +166,7 @@ public final class AgentController: ObservableObject {
         guard let webView else { return nil }
         let configuration = WKSnapshotConfiguration()
         configuration.rect = webView.bounds
-        let image = try await withCheckedThrowingContinuation { continuation in
+        let image = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<(encoded: String, viewport: CGSize), Error>) in
             webView.takeSnapshot(with: configuration) { image, error in
                 if let error {
                     continuation.resume(throwing: error)
